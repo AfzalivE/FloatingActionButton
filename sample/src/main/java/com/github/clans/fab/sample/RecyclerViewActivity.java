@@ -1,5 +1,7 @@
 package com.github.clans.fab.sample;
 
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +12,6 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.fab.sample.R;
-
-import java.util.Locale;
 
 /**
  * A very basic example of using FloatingActionButton with RecyclerView
@@ -34,19 +34,7 @@ public class RecyclerViewActivity extends ActionBarActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new LanguageAdapter(availableLocales));
 
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (Math.abs(dy) > mScrollOffset) {
-                    if (dy > 0) {
-                        fab.hide(true);
-                    } else {
-                        fab.show(true);
-                    }
-                }
-            }
-        });
+        fab.attachToRecyclerView(recyclerView);
     }
 
     private class LanguageAdapter extends RecyclerView.Adapter<ViewHolder> {

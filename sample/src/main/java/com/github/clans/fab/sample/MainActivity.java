@@ -1,21 +1,20 @@
 package com.github.clans.fab.sample;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.github.fab.sample.R;
 import com.github.clans.fab.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import com.github.fab.sample.R;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -55,20 +54,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem > mPreviousVisibleItem) {
-                    fab.hide(true);
-                } else if (firstVisibleItem < mPreviousVisibleItem) {
-                    fab.show(true);
-                }
-                mPreviousVisibleItem = firstVisibleItem;
-            }
-        });
+        fab.attachToListView(listView);
     }
 }

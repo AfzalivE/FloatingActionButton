@@ -21,6 +21,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -29,6 +30,8 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -769,5 +772,45 @@ public class FloatingActionButton extends ImageButton {
             mShowShadow = true;
             updateBackground();
         }
+    }
+
+    public void attachToRecyclerView(RecyclerView recyclerView) {
+        attachToRecyclerView(recyclerView, 4);
+    }
+
+    public void attachToRecyclerView(RecyclerView recyclerView, final int scrollOffset) {
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (Math.abs(dy) > scrollOffset) {
+                    if (dy > 0) {
+                        hide(true);
+                    } else {
+                        show(true);
+                    }
+                }
+            }
+        });
+    }
+
+    public void attachToListView(AbsListView listView) {
+        listView.setOnScrollListener(new OnScrollListener() {
+            public int mPreviousVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem > mPreviousVisibleItem) {
+                    hide(true);
+                } else if (firstVisibleItem < mPreviousVisibleItem) {
+                    show(true);
+                }
+                mPreviousVisibleItem = firstVisibleItem;
+            }
+        });
     }
 }
