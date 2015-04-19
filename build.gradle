@@ -13,6 +13,9 @@ buildscript {
 }
 
 allprojects {
+    project.ext.VERSION_CODE = 1
+    project.ext.VERSION_NAME = "1.0"
+
     repositories {
         jcenter()
     }
