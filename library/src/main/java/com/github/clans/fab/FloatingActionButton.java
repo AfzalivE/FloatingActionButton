@@ -176,13 +176,13 @@ public class FloatingActionButton extends ImageButton {
     void updateBackground() {
         LayerDrawable layerDrawable;
         if (hasShadow()) {
-            layerDrawable = new LayerDrawable(new Drawable[]{
+            layerDrawable = new LayerDrawable(new Drawable[] {
                     new Shadow(),
                     createFillDrawable(),
                     getIconDrawable()
             });
         } else {
-            layerDrawable = new LayerDrawable(new Drawable[]{
+            layerDrawable = new LayerDrawable(new Drawable[] {
                     createFillDrawable(),
                     getIconDrawable()
             });
@@ -225,12 +225,12 @@ public class FloatingActionButton extends ImageButton {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private Drawable createFillDrawable() {
         StateListDrawable drawable = new StateListDrawable();
-        drawable.addState(new int[]{android.R.attr.state_pressed}, createCircleDrawable(mColorPressed));
-        drawable.addState(new int[]{}, createCircleDrawable(mColorNormal));
+        drawable.addState(new int[] {android.R.attr.state_pressed}, createCircleDrawable(mColorPressed));
+        drawable.addState(new int[] {}, createCircleDrawable(mColorNormal));
 
         if (Util.hasLollipop()) {
-            RippleDrawable ripple = new RippleDrawable(new ColorStateList(new int[][]{{}},
-                    new int[]{mColorRipple}), drawable, null);
+            RippleDrawable ripple = new RippleDrawable(new ColorStateList(new int[][] {{}},
+                    new int[] {mColorRipple}), drawable, null);
             setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
@@ -296,10 +296,10 @@ public class FloatingActionButton extends ImageButton {
     void onActionDown() {
         if (mBackgroundDrawable instanceof StateListDrawable) {
             StateListDrawable drawable = (StateListDrawable) mBackgroundDrawable;
-            drawable.setState(new int[]{android.R.attr.state_pressed});
+            drawable.setState(new int[] {android.R.attr.state_pressed});
         } else if (Util.hasLollipop()) {
             RippleDrawable ripple = (RippleDrawable) mBackgroundDrawable;
-            ripple.setState(new int[]{android.R.attr.state_enabled, android.R.attr.state_pressed});
+            ripple.setState(new int[] {android.R.attr.state_enabled, android.R.attr.state_pressed});
             ripple.setHotspot(calculateCenterX(), calculateCenterY());
             ripple.setVisible(true, true);
         }
@@ -309,10 +309,10 @@ public class FloatingActionButton extends ImageButton {
     void onActionUp() {
         if (mBackgroundDrawable instanceof StateListDrawable) {
             StateListDrawable drawable = (StateListDrawable) mBackgroundDrawable;
-            drawable.setState(new int[]{});
+            drawable.setState(new int[] {});
         } else if (Util.hasLollipop()) {
             RippleDrawable ripple = (RippleDrawable) mBackgroundDrawable;
-            ripple.setState(new int[]{});
+            ripple.setState(new int[] {});
             ripple.setHotspot(calculateCenterX(), calculateCenterY());
             ripple.setVisible(true, true);
         }
@@ -666,6 +666,18 @@ public class FloatingActionButton extends ImageButton {
     /**
      * Makes the <b>FloatingActionButton</b> to appear and sets its visibility to {@link #VISIBLE}
      *
+     * @param showAnimation plays specified show animation
+     */
+    public void show(Animation showAnimation) {
+        if (isHidden()) {
+            startAnimation(showAnimation);
+            setVisibility(VISIBLE);
+        }
+    }
+
+    /**
+     * Makes the <b>FloatingActionButton</b> to appear and sets its visibility to {@link #VISIBLE}
+     *
      * @param animate if true - plays "show animation"
      */
     public void show(boolean animate) {
@@ -674,6 +686,18 @@ public class FloatingActionButton extends ImageButton {
                 playShowAnimation();
             }
             setVisibility(VISIBLE);
+        }
+    }
+
+    /**
+     * Makes the <b>FloatingActionButton</b> to disappear and sets its visibility to {@link #INVISIBLE}
+     *
+     * @param hideAnimation plays specified hide animation
+     */
+    public void hide(Animation hideAnimation) {
+        if (!isHidden()) {
+            startAnimation(hideAnimation);
+            setVisibility(INVISIBLE);
         }
     }
 
@@ -774,26 +798,45 @@ public class FloatingActionButton extends ImageButton {
         }
     }
 
+    /**
+     * Attaches the fab to a RecyclerView to toggle hide/show animation on scroll.
+     * The slide up/down animation is used.
+     *
+     * @param recyclerView The RecyclerView to attach with
+     */
     public void attachToRecyclerView(RecyclerView recyclerView) {
         attachToRecyclerView(recyclerView, 4);
     }
 
-    public void attachToRecyclerView(RecyclerView recyclerView, final int scrollOffset) {
+    /**
+     * Attaches the fab to a RecyclerView to toggle hide/show animation on scroll.
+     * The slide up/down animation is used
+     *
+     * @param recyclerView The RecyclerView to attach with
+     * @param scrollOffset
+     */
+    private void attachToRecyclerView(RecyclerView recyclerView, final int scrollOffset) {
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (Math.abs(dy) > scrollOffset) {
                     if (dy > 0) {
-                        hide(true);
+                        hide(AnimationUtils.loadAnimation(getContext(), R.anim.fab_hide_to_bottom));
                     } else {
-                        show(true);
+                        show(AnimationUtils.loadAnimation(getContext(), R.anim.fab_show_from_bottom));
                     }
                 }
             }
         });
     }
 
+    /**
+     * Attaches the fab to a AbsListView to toggle hide/show animation on scroll.
+     * The slide up/down animation is used
+     *
+     * @param listView The AbsListView to attach with
+     */
     public void attachToListView(AbsListView listView) {
         listView.setOnScrollListener(new OnScrollListener() {
             public int mPreviousVisibleItem;
@@ -805,9 +848,9 @@ public class FloatingActionButton extends ImageButton {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem > mPreviousVisibleItem) {
-                    hide(true);
+                    hide(AnimationUtils.loadAnimation(getContext(), R.anim.fab_hide_to_bottom));
                 } else if (firstVisibleItem < mPreviousVisibleItem) {
-                    show(true);
+                    show(AnimationUtils.loadAnimation(getContext(), R.anim.fab_show_from_bottom));
                 }
                 mPreviousVisibleItem = firstVisibleItem;
             }

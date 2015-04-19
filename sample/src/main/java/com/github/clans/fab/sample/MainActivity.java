@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -18,8 +17,6 @@ import com.github.fab.sample.R;
 
 
 public class MainActivity extends ActionBarActivity {
-
-    private int mPreviousVisibleItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +39,6 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void run() {
                 fab.show(true);
-                fab.setShowAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.show_from_bottom));
-                fab.setHideAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.hide_to_bottom));
             }
         }, 300);
 

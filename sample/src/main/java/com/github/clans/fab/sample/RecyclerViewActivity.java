@@ -3,6 +3,7 @@ package com.github.clans.fab.sample;
 import java.util.Locale;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +19,6 @@ import com.github.fab.sample.R;
  */
 public class RecyclerViewActivity extends ActionBarActivity {
 
-    private int mScrollOffset = 4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +27,13 @@ public class RecyclerViewActivity extends ActionBarActivity {
         Locale[] availableLocales = Locale.getAvailableLocales();
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.show(true);
+            }
+        }, 300);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);

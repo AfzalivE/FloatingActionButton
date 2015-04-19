@@ -1,5 +1,8 @@
 package com.github.clans.fab.sample;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -10,16 +13,12 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
-import com.github.fab.sample.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.github.fab.sample.R;
 
 public class FloatingMenusActivity extends ActionBarActivity {
 
@@ -102,8 +101,6 @@ public class FloatingMenusActivity extends ActionBarActivity {
         fab32.setOnClickListener(clickListener);
 
         final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
-        fabEdit.setShowAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_up));
-        fabEdit.setHideAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_down));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
