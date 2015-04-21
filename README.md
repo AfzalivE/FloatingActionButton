@@ -3,6 +3,20 @@
 
 Yet another implementation of [Floating Action Button](http://www.google.com/design/spec/components/buttons.html#buttons-floating-action-button) for Android.
 
+# Changes from Clans' original version
+- FAB auto shows/hides (with sliding animation) when RecyclerView and ListView are scrolled
+- show/hide methods have an additional option of specifying the animation to run for that particular call
+
+```java
+    fab.attachToRecyclerView(recyclerView); // to attach to a RecyclerView for scroll detection
+    fab.attachToListView(listView); // to attach to a listView for scroll detection
+```
+
+```java
+    fab.hide(R.anim.fab_hide_to_bottom);
+    fab.show(R.anim.fab_show_from_bottom);
+```
+
 # Requirements
 The library requires Android **API Level 14+**.
 
