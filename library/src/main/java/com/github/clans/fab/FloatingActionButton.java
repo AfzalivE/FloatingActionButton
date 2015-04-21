@@ -668,9 +668,9 @@ public class FloatingActionButton extends ImageButton {
      *
      * @param showAnimation plays specified show animation
      */
-    public void show(Animation showAnimation) {
+    public void show(int showAnimation) {
         if (isHidden()) {
-            startAnimation(showAnimation);
+            startAnimation(AnimationUtils.loadAnimation(getContext(), showAnimation));
             setVisibility(VISIBLE);
         }
     }
@@ -694,9 +694,9 @@ public class FloatingActionButton extends ImageButton {
      *
      * @param hideAnimation plays specified hide animation
      */
-    public void hide(Animation hideAnimation) {
+    public void hide(int hideAnimation) {
         if (!isHidden()) {
-            startAnimation(hideAnimation);
+            startAnimation(AnimationUtils.loadAnimation(getContext(), hideAnimation));
             setVisibility(INVISIBLE);
         }
     }
@@ -848,9 +848,9 @@ public class FloatingActionButton extends ImageButton {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem > mPreviousVisibleItem) {
-                    hide(AnimationUtils.loadAnimation(getContext(), R.anim.fab_hide_to_bottom));
+                    hide(R.anim.fab_hide_to_bottom);
                 } else if (firstVisibleItem < mPreviousVisibleItem) {
-                    show(AnimationUtils.loadAnimation(getContext(), R.anim.fab_show_from_bottom));
+                    show(R.anim.fab_show_from_bottom);
                 }
                 mPreviousVisibleItem = firstVisibleItem;
             }
