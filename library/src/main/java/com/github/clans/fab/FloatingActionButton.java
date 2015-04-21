@@ -822,9 +822,9 @@ public class FloatingActionButton extends ImageButton {
                 super.onScrolled(recyclerView, dx, dy);
                 if (Math.abs(dy) > scrollOffset) {
                     if (dy > 0) {
-                        hide(AnimationUtils.loadAnimation(getContext(), R.anim.fab_hide_to_bottom));
+                        hide(R.anim.fab_hide_to_bottom);
                     } else {
-                        show(AnimationUtils.loadAnimation(getContext(), R.anim.fab_show_from_bottom));
+                        show(R.anim.fab_show_from_bottom);
                     }
                 }
             }
