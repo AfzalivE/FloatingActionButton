@@ -32,7 +32,7 @@ def description = bintrayProps['description']
 
 def siteUrl = bintrayProps['siteUrl']      // Homepage URL of the library
 def gitUrl = bintrayProps['gitUrl']   // Git repository URL
-def issueUrl = bintrayProps['issueUrl']
+def issuesUrl = bintrayProps['issuesUrl']
 
 def licenceName = bintrayProps['licenceName']
 def licenceUrl = bintrayProps['licenceUrl']
@@ -46,6 +46,7 @@ def developerOrg = bintrayProps['developerOrg']
 
 def publishJavadoc = bintrayProps['publishJavadoc']
 def publishSources = bintrayProps['publishSources']
+def publishDownloadNumbers = bintrayProps['publishDownloadNumbers']
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -139,7 +140,8 @@ bintray {
         desc = description
         websiteUrl = siteUrl
         vcsUrl = gitUrl
-        issueTrackerUrl = issueUrl
+        issueTrackerUrl = issuesUrl
+        publicDownloadNumbers = publishDownloadNumbers
 
         version {
             name = project.version
