@@ -73,7 +73,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-    if (publishJavadoc){
+    if (publishJavadoc) {
         archives javadocJar
     }
     if (publishSources) {
